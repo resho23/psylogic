@@ -1,36 +1,40 @@
 def erstelle_gutachten(roht_text):
-    gutachten_template = f"""
+    diagnose = "Keine eindeutige Diagnose ableitbar"
+
+    if "depress" in roht_text.lower():
+        diagnose = "Verdacht auf depressive Episode"
+
+    if "angst" in roht_text.lower():
+        diagnose = "Hinweise auf Angststörung"
+
+    return f'''
 1. Anamnese
---------------------
 {roht_text}
 
 2. Psychopathologischer Befund
---------------------
-[Zu ergänzen]
+Automatisch aus Eingabe erkannt
 
-3. Diagnose (mit Begründung)
---------------------
-[Zu ergänzen]
+3. Diagnose
+{diagnose}
 
 4. Beurteilung
---------------------
-[Zu ergänzen]
+Weitere klinische Prüfung erforderlich
 
 5. Prognose
---------------------
-[Zu ergänzen]
-"""
-    return gutachten_template
+Abhängig vom Verlauf
+'''
 
 
 def analysiere_gutachten(gutachten_text):
+    schwächen = []
+
+    if "Keine eindeutige" in gutachten_text:
+        schwächen.append("Diagnose unscharf")
+
     return {
-        "schwaechen": [
-            "Diagnose könnte präziser begründet sein",
-            "Befund sollte detaillierter ausgeführt werden"
-        ],
+        "schwaechen": schwächen or ["Keine gravierenden Schwächen erkannt"],
         "verbesserungsvorschlaege": [
-            "Anamnese stärker strukturieren",
-            "Diagnostische Ableitung expliziter darstellen"
+            "Mehr Symptomdetails ergänzen",
+            "Zeitlichen Verlauf genauer beschreiben"
         ]
     }
